@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import basicAuth from 'express-basic-auth';
 import { Persistence } from './persistence/persistence';
+import postRoutes from './routes/post-routes';
 
 dotenv.config();
 
@@ -20,10 +21,7 @@ const authMiddleware = basicAuth({
 
 app.use(authMiddleware);
 
-app.get('/', async (req, res) => {
-    const result = { currentTime: new Date() };
-    res.json(result);
-});
+app.use('/posts', postRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
