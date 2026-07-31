@@ -2,14 +2,17 @@ import mysql2, { ResultSetHeader } from 'mysql2/promise';
 import GenericEntity from '../entity/generic-entity';
 import { AsyncLocalStorage } from 'async_hooks';
 import { PoolConnection } from 'mysql2/promise';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const transactionStorage = new AsyncLocalStorage<PoolConnection>();
 
 export const pool = mysql2.createPool({
-    host: process.env._DB_HOST || 'localhost',
-    user: process.env._DB_USERNAME,
-    password: process.env._DB_PASSWORD,
-    database: process.env._DB_NAME,
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 
 export class Persistence {
