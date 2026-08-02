@@ -11,5 +11,5 @@ export interface Post extends GenericEntity {
 export const PostTableName = 'post';
 
 export const PostQueries = {
-
+    SELECT_ALL: `SELECT * FROM ${PostTableName} ORDER BY created_at DESC`,
 }
