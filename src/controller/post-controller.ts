@@ -49,4 +49,22 @@ export class PostController {
 
         res.status(200).json({ pageSize, pageNumber, posts });
     }
+
+    static async getPostBySlug(req: Request, res: Response): Promise<void> {
+        const { slug } = req.params;
+
+        if (!slug) {
+            res.status(400).json({ error: 'Invalid post slug' });
+            return;
+        }
+
+        const post = await Persistence.selectEntityByNamedQuery<Post>(PostQueries.SELECT_BY_SLUG, [slug]);
+
+        if (!post) {
+            res.status(404).json({ error: 'Post not found' });
+            return;
+        }
+
+        res.status(200).json(post);
+    }
 }

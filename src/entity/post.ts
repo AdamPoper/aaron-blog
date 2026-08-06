@@ -12,4 +12,5 @@ export const PostTableName = 'post';
 
 export const PostQueries = {
     SELECT_ALL: `SELECT * FROM ${PostTableName} ORDER BY created_at DESC`,
+    SELECT_BY_SLUG: `SELECT * FROM ${PostTableName} WHERE slug = ?`,
 }
