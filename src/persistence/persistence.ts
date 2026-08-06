@@ -28,11 +28,8 @@ export class Persistence {
     }
 
     static async selectEntitiesByNamedQueryPaged<T extends GenericEntity>(query: string, pageSize: number, pageNumber: number, args?: Array<any>): Promise<Array<T>> {
-        const safePageSize = Math.max(0, Math.floor(pageSize));
-        const safeOffset = safePageSize * Math.max(0, Math.floor(pageNumber));
-        // LIMIT/OFFSET as bound `?` params trigger "Incorrect arguments to mysqld_stmt_execute"
-        // with mysql2's execute(); inlining is safe since both values are forced to integers above.
-        const pagedQuery = `${query.trim().replace(/;\s*$/, '')} LIMIT ${safePageSize} OFFSET ${safeOffset}`;
+        const offset = pageSize * pageNumber;
+        const pagedQuery = `${query.trim().replace(/;\s*$/, '')} LIMIT ${pageSize} OFFSET ${offset}`;
         const [results] = await pool.execute(pagedQuery, args);
         return results as T[];
     }
