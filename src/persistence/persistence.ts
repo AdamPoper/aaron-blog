@@ -40,6 +40,12 @@ export class Persistence {
         return (results as T[])[0] as T;
     }
 
+    static async selectCountByNamedQuery(query: string, args?: Array<any>): Promise<number> {
+        const [results] = await pool.execute(query, args);
+        const countResult = (results as Array<{ count: number }>)[0];
+        return countResult ? countResult.count : 0;
+    }
+
     static async persistEntity<T extends GenericEntity>(className: string, entity: Partial<T>): Promise<any> {
         const columns = Object.keys(entity);
         const values = Object.values(entity);
