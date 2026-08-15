@@ -46,8 +46,9 @@ export class PostController {
             pageSize,
             pageNumber
         );
+        const total = await Persistence.selectCountByNamedQuery(PostQueries.SELECT_COUNT);
 
-        res.status(200).json({ pageSize, pageNumber, posts });
+        res.status(200).json({ pageSize, pageNumber, total, posts });
     }
 
     static async getPostBySlug(req: Request, res: Response): Promise<void> {
