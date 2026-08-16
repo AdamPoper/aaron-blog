@@ -7,5 +7,6 @@ const router = Router();
 router.post('/create', authMiddleware, PostController.createPost);
 router.get('/get', PostController.getPosts);
 router.get('/:slug', PostController.getPostBySlug);
+router.put('/:slug', authMiddleware, PostController.updatePost);
 
 export default router;
