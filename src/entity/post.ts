@@ -5,6 +5,7 @@ export interface Post extends GenericEntity {
     content: string;
     slug: string;
     post_status: PostStatus;
+    category_id: number | null;
     created_at: number;
     updated_at: number;
 }
@@ -19,4 +20,5 @@ export const PostQueries = {
     SELECT_BY_STATUS: `SELECT * FROM ${PostTableName} WHERE post_status = ? ORDER BY created_at DESC`,
     SELECT_COUNT: `SELECT COUNT(*) as count FROM ${PostTableName}`,
     SELECT_COUNT_BY_STATUS: `SELECT COUNT(*) as count FROM ${PostTableName} WHERE post_status = ?`,
+    SELECT_BY_CATEGORY_ID: `SELECT * FROM ${PostTableName} WHERE category_id = ?`,
 }

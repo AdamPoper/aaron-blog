@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import postRoutes from './routes/post-routes';
 import authRoutes from './routes/auth-routes';
+import categoryRoutes from './routes/category-routes';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 
 app.use('/posts', postRoutes);
 app.use('/auth', authRoutes);
+app.use('/categories', categoryRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
