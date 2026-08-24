@@ -18,7 +18,7 @@ function slugify(title: string): string {
 export class PostController {
 
     static async createPost(req: Request, res: Response): Promise<void> {
-        const { title, content, post_status } = req.body;
+        const { title, content, post_status, category_id } = req.body;
 
         if (!title || !content) {
             res.status(400).json({ error: 'title and content are required' });
@@ -29,6 +29,7 @@ export class PostController {
             title,
             content,
             post_status,
+            category_id,
             slug: slugify(title),
         });
 
@@ -98,7 +99,7 @@ export class PostController {
             return;
         }
 
-        const { title, content, post_status } = req.body;
+        const { title, content, post_status, category_id } = req.body;
 
         if (post_status !== undefined && post_status !== 'draft' && post_status !== 'posted') {
             res.status(400).json({ error: "post_status must be 'draft' or 'posted'" });
@@ -112,6 +113,9 @@ export class PostController {
         }
         if (content !== undefined) update.content = content;
         if (post_status !== undefined) update.post_status = post_status;
+        if (category_id !== null && category_id > 0) {
+            update.category_id = category_id;
+        }
 
         if (Object.keys(update).length <= 2) {
             res.status(400).json({ error: 'No fields to update' });
